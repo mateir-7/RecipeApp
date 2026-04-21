@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>RecipeApp Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+            max-width: 1000px;
+        }
+        .form-container {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        label { display: block; margin-top: 10px; font-weight: bold; color: #444; }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button { margin-top: 15px; padding: 10px 15px; background-color: #0056b3; color: white; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 14px;}
+        button:hover { background-color: #004494; }
+        p.help-text { font-size: 13px; color: #666; margin-top: 0; }
+    </style>
+</head>
+<body>
+<h1>RecipeApp</h1>
+
+<div class="dashboard-layout">
+
+    <div class="form-container">
+        <h2>Add New User</h2>
+        <form action="/addUser" method="post">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+
+            <label>Surname:</label>
+            <input type="text" name="surname" required>
+
+            <label>Skill Level:</label>
+            <select name="skillLevel" required>
+                <option value="" disabled selected>Select skill...</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+
+            <label>Preferred Cuisine:</label>
+            <select name="preferredCuisine" required>
+                <option value="" disabled selected>Select a cuisine...</option>
+                <option value="Italian">Italian</option>
+                <option value="Asian">Asian</option>
+                <option value="Indian">Indian</option>
+                <option value="European">European</option>
+                <option value="American">American</option>
+                <option value="Mexican">Mexican</option>
+                <option value="French">French</option>
+                <option value="Mediterranean">Mediterranean</option>
+            </select>
+
+            <button type="submit">Save User</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Add New Recipe</h2>
+        <form action="/addRecipe" method="post">
+            <label>Recipe Title:</label>
+            <input type="text" name="title" placeholder="Spicy Tacos?" required>
+
+            <label>Cuisine Type 1:</label>
+            <select name="cuisine1" required>
+                <option value="" disabled selected>Select first cuisine...</option>
+                <option value="Italian">Italian</option>
+                <option value="Asian">Asian</option>
+                <option value="Indian">Indian</option>
+                <option value="European">European</option>
+                <option value="American">American</option>
+                <option value="Mexican">Mexican</option>
+                <option value="French">French</option>
+                <option value="Mediterranean">Mediterranean</option>
+            </select>
+
+            <label>Cuisine Type 2:</label>
+            <select name="cuisine2" required>
+                <option value="" disabled selected>Select second cuisine...</option>
+                <option value="Italian">Italian</option>
+                <option value="Asian">Asian</option>
+                <option value="Indian">Indian</option>
+                <option value="European">European</option>
+                <option value="American">American</option>
+                <option value="Mexican">Mexican</option>
+                <option value="French">French</option>
+                <option value="Mediterranean">Mediterranean</option>
+            </select>
+
+            <label>Difficulty Level:</label>
+            <select name="difficulty" required>
+                <option value="" disabled selected>Select difficulty...</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+            </select>
+
+            <button type="submit">Save Recipe</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>User Recommendations</h2>
+        <p class="help-text">Enter your name and see our recommendations for you!</p>
+
+        <form id="userActionForm" method="get">
+            <label>User's Name:</label>
+            <input type="text" name="userName" required>
+
+            <button type="submit" onclick="document.getElementById('userActionForm').action='/recommendSkill';">
+                Recommend by Skill Level
+            </button>
+
+            <button type="submit" onclick="document.getElementById('userActionForm').action='/recommendSkillAndCuisine';">
+                Recommend by Skill Level & Preferred Cuisine
+            </button>
+
+            <button type="submit" onclick="document.getElementById('userActionForm').action='/recipes';">
+                View All Recipes (color coded for your tastes!)
+            </button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Search & Filter</h2>
+
+        <form action="/searchRecipe" method="get" style="margin-bottom: 20px;">
+            <label>Search by Exact Title:</label>
+            <input type="text" name="title" placeholder="Spaghetti Carbonara" required>
+            <button type="submit">Search Recipe</button>
+        </form>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+        <form action="/filterCuisine" method="get">
+            <label>Filter by Cuisine Type:</label>
+            <select name="cuisine" required>
+                <option value="" disabled selected>Select a cuisine...</option>
+                <option value="Italian">Italian</option>
+                <option value="Asian">Asian</option>
+                <option value="Indian">Indian</option>
+                <option value="European">European</option>
+                <option value="American">American</option>
+                <option value="Mexican">Mexican</option>
+                <option value="French">French</option>
+                <option value="Mediterranean">Mediterranean</option>
+            </select>
+            <button type="submit">Filter Cuisine</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
